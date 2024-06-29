@@ -1,0 +1,370 @@
+--- This is skidded using iku autofarm, and chat gpt WORKING AUTOFARM FOR DA HOOD SUPPORTS WAVE
+
+repeat task.wait(0.1) until game:IsLoaded() and game:GetService("Players").LocalPlayer
+
+-- Create GUI elements
+local ca = Instance.new("ScreenGui", game:GetService("CoreGui"))
+ca.Name = "CurrencyDisplay"
+ca.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+local frame = Instance.new("Frame")
+frame.Name = "CurrencyFrame"
+frame.BackgroundTransparency = 1  -- No background
+frame.Position = UDim2.new(0, 0, 0, 0)
+frame.Size = UDim2.new(1, 0, 1, 0)  -- Full screen
+frame.Parent = ca
+
+local textLabel = Instance.new("TextLabel")
+textLabel.Name = "CurrencyLabel"
+textLabel.Font = Enum.Font.SourceSansBold  -- Bolder font
+textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)  -- White text
+textLabel.TextSize = 36  -- Larger text size
+textLabel.BackgroundTransparency = 1  -- No background
+textLabel.Size = UDim2.new(1, 0, 1, 0)  -- Full screen
+textLabel.TextScaled = true  -- Scale text to fit
+textLabel.Parent = frame
+
+local Player = game:GetService("Players").LocalPlayer
+
+-- Function to format numbers with commas
+local function formatCurrency(value)
+    local formatted = tostring(value)
+    while true do
+        formatted, k = formatted:gsub("^(-?%d+)(%d%d%d)", '%1,%2')
+        if k == 0 then
+            break
+        end
+    end
+    return formatted
+end
+
+local function updateCurrency()
+    local currencyValue = Player:WaitForChild("DataFolder"):WaitForChild("Currency").Value
+    textLabel.Text = "Currency: " .. formatCurrency(currencyValue)
+end
+
+-- Update the currency display initially and whenever it changes
+updateCurrency()
+Player.DataFolder.Currency:GetPropertyChangedSignal("Value"):Connect(updateCurrency)
+
+repeat task.wait(0.1) until game:IsLoaded() and game:GetService("Players").LocalPlayer
+
+local ca = Instance.new("ScreenGui", game:GetService("CoreGui"))
+ca.Name = "ca"
+ca.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+local frame = Instance.new("Frame")
+frame.Name = "Frame"
+frame.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
+frame.Position = UDim2.fromScale(0.161, 0.422)
+frame.Size = UDim2.fromOffset(211, 100)
+frame.Active = true
+frame.Draggable = true
+local textLabel = Instance.new("TextLabel")
+textLabel.Name = "TextLabel"
+textLabel.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json")
+textLabel.Text = "cashauara"
+textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+textLabel.TextSize = 14
+textLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+textLabel.BackgroundTransparency = 1
+textLabel.Position = UDim2.fromScale(0.0237, 0)
+textLabel.Size = UDim2.fromOffset(200, 31)
+textLabel.Parent = frame
+local textButton = Instance.new("TextButton")
+textButton.Name = "TextButton"
+textButton.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json")
+textButton.Text = "enable"
+textButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+textButton.TextSize = 14
+textButton.BackgroundColor3 = Color3.fromRGB(24, 24, 24)
+textButton.BorderSizePixel = 0
+textButton.Position = UDim2.fromScale(0.232, 0.41)
+textButton.Size = UDim2.fromOffset(112, 44)
+textButton.Parent = frame
+frame.Parent = ca
+
+task.wait()
+
+local Player = game:GetService("Players").LocalPlayer
+local Drops = workspace.Ignored.Drop
+local E, A = true, false  -- Set E to true to always enable the functionality
+
+if (not Player.Character) or (not Player.Character:FindFirstChild("FULLY_LOADED_CHAR")) then 
+	repeat task.wait(0.5) until Player.Character and Player.Character:FindFirstChild("FULLY_LOADED_CHAR")
+	task.wait(1)
+end
+
+local a = game:GetService("ReplicatedStorage").MainEvent
+local b = {"CHECKER_1", "TeleportDetect", "OneMoreTime"}
+local c
+c = hookmetamethod(game, "__namecall", function(...)
+	local d = {...}
+	local self = d[1]
+	local e = getnamecallmethod()
+	local f = getcallingscript()
+	if e == "FireServer" and self == a and table.find(b, d[2]) then return end
+	return c(...)
+end)
+
+spawn(function()
+	while true and task.wait(0.15) do 
+		if E == true then 
+			for i, v in pairs(Drops:GetChildren()) do 
+				if v.Name == "MoneyDrop" and (v.Position - Player.Character.HumanoidRootPart.Position).magnitude <= 12 then 
+					if A == false then 
+						A = true
+						repeat task.wait()
+							for i, z in pairs(Player.Character:GetChildren()) do 
+								if z:IsA("Tool") then 
+									z.Parent = Player.Backpack
+								end
+							end
+							workspace.Camera.CameraType = Enum.CameraType.Scriptable
+							workspace.Camera.CFrame = CFrame.lookAt((v.Position + Vector3.new(math.random(-0.3, 0.3), 2, math.random(-0.3, 0.3))), v.Position)
+							game:GetService("VirtualInputManager"):SendMouseButtonEvent((workspace.Camera.ViewportSize.X/2), (workspace.Camera.ViewportSize.Y/2), 0, true, game, 1)
+							task.wait(0.15)
+							game:GetService("VirtualInputManager"):SendMouseButtonEvent((workspace.Camera.ViewportSize.X/2), (workspace.Camera.ViewportSize.Y/2), 0, false, game, 1)
+						until (not v) or (v.Parent == nil) or (v.Position - Player.Character.HumanoidRootPart.Position).magnitude > 12
+						A = false
+						workspace.Camera.CameraType = Enum.CameraType.Custom
+						workspace.Camera.CameraSubject = Player.Character.Humanoid
+					end
+				end
+			end
+		end
+	end
+end)
+
+--// THIS WAS NOT MADE BY ME!!, Someone send it to me and asked me if I could please add it to my Alt Control and I said yes
+local decalsyeeted = true -- Leaving this on makes games look shitty but the fps goes up by at least 20.
+local g = game
+local w = g.Workspace
+local l = g.Lighting
+local t = w.Terrain
+t.WaterWaveSize = 0
+t.WaterWaveSpeed = 0
+t.WaterReflectance = 0
+t.WaterTransparency = 0
+l.GlobalShadows = false
+l.FogEnd = 9e9
+l.Brightness = 0
+settings().Rendering.QualityLevel = "Level01"
+for i, v in pairs(g:GetDescendants()) do
+    if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+        v.Material = "Plastic"
+        v.Reflectance = 0
+    elseif v:IsA("Decal") or v:IsA("Texture") and decalsyeeted then
+        v.Transparency = 1
+    elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+        v.Lifetime = NumberRange.new(0)
+    elseif v:IsA("Explosion") then
+        v.BlastPressure = 1
+        v.BlastRadius = 1
+    elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
+        v.Enabled = false
+    elseif v:IsA("MeshPart") then
+        v.Material = "Plastic"
+        v.Reflectance = 0
+        v.TextureID = 10385902758728957
+    end
+end
+for i, e in pairs(l:GetChildren()) do
+    if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
+        e.Enabled = false
+    end
+end
+
+-- Put this script inside a LocalScript
+
+local folderPath = {"MAP", "Map"} -- Replace with the path of the folder containing the mesh parts
+local meshNameToRemove = "Meshes/mountain" -- Replace with the name of the mesh parts you want to remove
+
+-- Function to find a folder by path
+local function findFolderByPath(path)
+    local currentFolder = workspace
+
+    for _, folderName in pairs(path) do
+        currentFolder = currentFolder:FindFirstChild(folderName)
+
+        if not currentFolder or not currentFolder:IsA("Folder") then
+            return nil
+        end
+    end
+
+    return currentFolder
+end
+
+-- Function to duplicate all mesh parts within a folder except those with the specified name
+local function duplicateMeshPartsExceptName(folder, name)
+    local duplicateParts = {}
+
+    for _, descendant in pairs(folder:GetDescendants()) do
+        if descendant:IsA("MeshPart") and descendant.Name ~= name then
+            local duplicatePart = descendant:Clone()
+            table.insert(duplicateParts, duplicatePart)
+        end
+    end
+
+    -- Clear the folder
+    folder:ClearAllChildren()
+
+    -- Reparent the duplicated parts back to the folder
+    for _, duplicatePart in pairs(duplicateParts) do
+        duplicatePart.Parent = folder
+    end
+end
+
+-- Get the specified folder by path
+local targetFolder = findFolderByPath(folderPath)
+
+if targetFolder then
+    -- Duplicate all mesh parts within the folder except those with the specified name
+    duplicateMeshPartsExceptName(targetFolder, meshNameToRemove)
+else
+    warn("Folder not found:", table.concat(folderPath, " > "))
+end
+
+getgenv().Enabled = true
+getgenv().Dis = function()
+	Enabled = false
+
+	for i,v in pairs(workspace:GetDescendants()) do 
+		if (v:IsA("Seat")) or (v:IsA("VehicleSeat")) then 
+			v.Disabled = true
+		end
+	end
+end
+
+if (not game:IsLoaded()) then 
+	game.Loaded:Wait()
+	task.wait(2)
+end
+
+repeat task.wait(0.2) until (game:GetService("Players").LocalPlayer) and (game:GetService("Players").LocalPlayer.Character)
+
+local Players = game:GetService("Players")
+local Cashiers = workspace.Cashiers
+local Player = Players.LocalPlayer
+
+loadstring(game:HttpGet("https://github.com/applless/RandomScripts/raw/main/AntiAfk"))()
+pcall(function()local a=game:GetService("ReplicatedStorage").MainEvent;local b={"CHECKER_1","TeleportDetect","OneMoreTime"}local c;c=hookmetamethod(game,"__namecall",function(...)local d={...}local self=d[1]local e=getnamecallmethod()local f=getcallingscript()if e=="FireServer"and self==a and table.find(b,d[2])then return end return c(...)end)end)
+
+for i,v in pairs(workspace:GetDescendants()) do 
+	if (v:IsA("Seat")) or (v:IsA("VehicleSeat")) then 
+		v.Disabled = true
+	end
+end
+
+
+
+local GetClosestPart = function(Table)
+	local ClosestPart = nil
+
+	for i,v in pairs(Table) do
+		if (ClosestPart == nil) then
+			ClosestPart = v
+		else
+			if ((Player.Character.HumanoidRootPart.Position - v.Position).Magnitude) < ((ClosestPart.Position - Player.Character.HumanoidRootPart.Position).Magnitude) then
+				ClosestPart = v
+			end
+		end
+	end
+	
+	return ClosestPart
+end
+
+local CheckKOed = function()
+	if (Player.Character.BodyEffects["K.O"].Value == true) then 
+		Player.Character.Humanoid.Health = 0 
+
+		for i,v in pairs(Player.Character:GetChildren()) do 
+			if (v:IsA("BasePart")) then 
+				v:Destroy()
+			end
+		end
+	end
+end
+
+local GetCashier = function()
+	local AvailableCashiers = {}
+	for i,v in pairs(Cashiers:GetChildren()) do 
+		if (v:FindFirstChild("Humanoid")) and (v.Humanoid.Health > 0) then 
+			AvailableCashiers[#AvailableCashiers+1] = v.Open
+		end
+	end
+	
+	local ClosestPart = GetClosestPart(AvailableCashiers)
+	
+	if (ClosestPart) and (ClosestPart.Parent) then 
+		return ClosestPart.Parent
+	else 
+		return nil
+	end
+
+end
+
+local GetCashParts = function()
+	local CashParts = {}
+	for i,v in pairs(workspace.Ignored.Drop:GetChildren()) do 
+		if (v.Name == "MoneyDrop") and ((Player.Character.HumanoidRootPart.Position - v.Position).Magnitude < 13) then 
+			CashParts[#CashParts+1] = v
+		end
+	end
+	
+	return CashParts
+end
+
+
+task.spawn(function()
+	while true and task.wait(0.33) do 
+		if (Enabled == true) and (Player.Character) and (Player.Character:FindFirstChild("FULLY_LOADED_CHAR"))  then 
+			local Cashier = nil
+			repeat 
+				Cashier = GetCashier()
+				task.wait()
+			until (Cashier ~= nil)
+
+			
+			repeat 
+				if (Player.Backpack:FindFirstChild("Combat")) then 
+					task.wait(0.77)
+					pcall(function()
+						Player.Backpack.Combat.Parent = Player.Character
+					end)
+					task.wait()
+				end
+				Player.Character.HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
+				Player.Character.HumanoidRootPart.CFrame = Cashier.Open.CFrame * CFrame.Angles(0, math.random(-180, 0), 0)
+				
+				if (Player.Character:FindFirstChild("Combat")) then 
+					Player.Character.Combat:Activate()
+					--Player.Character.Combat:Deactivate() Disabled because super punch is faster and more reliable on low fps.
+				end
+
+				
+				task.wait()
+			until (Cashier.Humanoid.Health <= 0) or (Player.Character.Humanoid.Health <= 0) or (Player.Character.BodyEffects["K.O"].Value == true) or (Enabled == false)
+			
+			pcall(CheckKOed)
+			
+			repeat 
+				local CashParts = GetCashParts()
+				
+				Player.Character.HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
+				Player.Character.HumanoidRootPart.CFrame = Cashier.Open.CFrame + Vector3.new(0, 2, 0)
+				
+				for i,v in pairs(CashParts) do 
+					if (v:FindFirstChild("ClickDetector")) then 
+						fireclickdetector(v.ClickDetector)
+					end
+				end
+
+				task.wait()
+			until (#CashParts <= 0) or (Player.Character.Humanoid.Health <= 0) or (Player.Character.BodyEffects["K.O"].Value == true) or (Enabled == false)
+			
+			pcall(CheckKOed)
+		end
+	end
+end)
+
+setfpscap(15)
